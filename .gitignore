@@ -1,0 +1,12 @@
+*.pyc
+*.pyd
+*.egg-info
+build
+dist
+packaging/deb
+packaging/msi
+packaging/build
+packaging/licence.rtf
+mcflirt/*.cpp
+.DS_Store
+_version.py
