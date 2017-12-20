@@ -1,9 +1,14 @@
 from PySide import QtGui
 
+from quantiphyse.gui.widgets import Citation
 from quantiphyse.utils import debug
 from quantiphyse.utils.exceptions import QpException
 
 from .deeds_wrapper import deedsReg
+
+CITE_TITLE = "MIND: Modality Independent Neighbourhood Descriptor for Multi-modal Deformable Registration"
+CITE_AUTHOR = "MP Heinrich, M Jenkinson, M Bhushan, T Matin, F Gleeson, M Brady, JA Schnabel"
+CITE_JOURNAL = "Medical Image Analysis. vol. 16(7) 2012, pp. 1423-1435"
 
 class DeedsRegMethod:
     def __init__(self):
@@ -15,6 +20,11 @@ class DeedsRegMethod:
 
     def interface(self):
         if self.options_layout is None:
+            vbox = QtGui.QVBoxLayout()
+
+            cite = Citation(CITE_TITLE, CITE_AUTHOR, CITE_JOURNAL)
+            vbox.addWidget(cite)
+
             grid = QtGui.QGridLayout()
 
             grid.addWidget(QtGui.QLabel("Regularisation parameter (alpha)"), 0, 0)
@@ -56,7 +66,10 @@ class DeedsRegMethod:
             #self.symm.setChecked(True)
             #grid.addWidget(self.symm,6, 1)
 
-            self.options_layout = grid
+            grid.setColumnStretch(2, 1)
+            vbox.addLayout(grid)
+
+            self.options_layout = vbox
         return self.options_layout
 
     def options(self):
