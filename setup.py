@@ -20,6 +20,7 @@ version = "0.0.1"
 extensions = []
 compile_args = []
 link_args = []
+extra_inc="."
 
 if sys.platform.startswith('win'):
     compile_args.append('/EHsc')
@@ -27,7 +28,6 @@ if sys.platform.startswith('win'):
     extra_inc = "deeds/src/compat"
 elif sys.platform.startswith('darwin'):
     link_args.append("-stdlib=libc++")
-    extra_inc = "."
 
 extensions.append(Extension("deeds.deeds_wrapper",
                  sources=['deeds/deeds_wrapper.pyx',
