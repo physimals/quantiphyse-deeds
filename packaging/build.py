@@ -22,7 +22,7 @@ def update_version(name, rootdir):
     return full_version, std_version
 
 def build_plugin(package_name, rootdir, distdir, platform):
-    os.system("python %s build_ext --inplace" % os.path.join(rootdir, "setup.py"))
+    os.system("python %s build_ext --inplace --force" % os.path.join(rootdir, "setup.py"))
     os.makedirs(distdir)
     packagedir = os.path.join(distdir, package_name)
     shutil.copytree(os.path.join(rootdir, package_name), packagedir)
