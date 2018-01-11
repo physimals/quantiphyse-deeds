@@ -10,7 +10,8 @@ class DeedsRegMethod:
         self.name = "deeds"
         self.options_layout = None
 
-    def reg(self, regdata, refdata, warp_rois, options):
+    def reg(self, regdata, refdata, voxel_sizes, warp_rois, options):
+        # DEEDS is currently ignoring voxel sizes?
         return deedsReg(regdata, refdata, warp_rois, **options)
 
     def interface(self):
