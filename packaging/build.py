@@ -56,4 +56,4 @@ if "--snapshot" in sys.argv:
 
 print("Building plugin")
 build_plugin(package_name, rootdir, distdir, platform)
-build_platform_package(package_name, distdir, pkgdir, v[1], version_str_display)
+build_platform_package("qp-" + package_name, package_name, distdir, pkgdir, v[1], version_str_display)
