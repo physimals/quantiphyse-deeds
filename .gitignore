@@ -10,3 +10,4 @@ packaging/licence.rtf
 deeds/*.cpp
 .DS_Store
 _version.py
+*.so
