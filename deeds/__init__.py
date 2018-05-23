@@ -1,23 +1,36 @@
+import numpy as np
+
 from PySide import QtGui
 
 from quantiphyse.gui.widgets import Citation
-from quantiphyse.utils import debug
+from quantiphyse.utils import debug, get_plugins
 from quantiphyse.utils.exceptions import QpException
 
-from .deeds_wrapper import deedsReg
+from .deeds_wrapper import deedsReg, deedsWarp
 
 CITE_TITLE = "MIND: Modality Independent Neighbourhood Descriptor for Multi-modal Deformable Registration"
 CITE_AUTHOR = "MP Heinrich, M Jenkinson, M Bhushan, T Matin, F Gleeson, M Brady, JA Schnabel"
 CITE_JOURNAL = "Medical Image Analysis. vol. 16(7) 2012, pp. 1423-1435"
 
-class DeedsRegMethod:
+RegMethod = get_plugins("base-classes", class_name="RegMethod")[0]
+
+class DeedsRegMethod(RegMethod):
     def __init__(self):
         self.name = "deeds"
         self.options_layout = None
 
-    def reg(self, regdata, refdata, voxel_sizes, warp_rois, options):
+    @classmethod
+    def reg_3d(cls, reg_data, reg_grid, ref_data, ref_grid, options, queue):
         # DEEDS is currently ignoring voxel sizes?
-        return deedsReg(regdata, refdata, warp_rois, **options)
+        # FIXME implement apply_transform
+        if not np.all(reg_grid == ref_grid):
+            raise QpException("DEEDS requires reference data to be in the same space as registration data")
+        return deedsReg(reg_data, ref_data, None, **options)
+
+    @classmethod
+    def apply_transform(cls, reg_data, reg_grid, ref_data, ref_grid, transform, queue):
+        ux, vx, wx = transform
+        return deedsWarp(reg_data, ux, vx, wx)
 
     def interface(self):
         if self.options_layout is None:

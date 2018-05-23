@@ -37,7 +37,14 @@ def run_deeds_warp_c(np.ndarray[np.float32_t, ndim=1] vol,
                       shape[0], shape[1], shape[2], 
                       &retvol[0])
 
-def deedsReg(vol, refvol, warp_rois, **kwargs):
+def deedsWarp(vol, ux, vx, wx):
+    shape = vol.shape
+    vol_out = np.zeros(shape, dtype=np.float32).flatten()
+    warp_vol = vol.flatten(order='F').astype(np.float32)
+    log = run_deeds_warp_c(warp_vol, ux, vx, wx, vol_out, shape)
+    return np.reshape(vol_out, shape, order='F'), log
+    
+def deedsReg(vol, refvol, **kwargs):
     shape = vol.shape
     # DEEDS works on flattened arrays in Fortran order
     vol = vol.flatten(order='F').astype(np.float32)
@@ -51,17 +58,5 @@ def deedsReg(vol, refvol, warp_rois, **kwargs):
                       
     retvol = np.zeros(vol.shape, dtype=np.float32).flatten().astype(np.float32)
     log += run_deeds_warp_c(vol, ux, vx, wx, retvol, shape)
-    retvol = np.reshape(retvol, shape, order='F')
-    
-    warp_rois_out = None
-    if warp_rois is not None:
-        num_rois = warp_rois.shape[3]
-        warp_rois_out = np.zeros(warp_rois.shape, dtype=np.float32)
-        vol_out = np.zeros(warp_rois.shape[:3]).flatten().astype(np.float32)
-        for v in range(num_rois):
-            warp_roi = warp_rois[:,:,:,v].flatten(order='F').astype(np.float32)
-            log += run_deeds_warp_c(warp_roi, ux, vx, wx, vol_out, shape)
-            warp_rois_out[:,:,:,v] = np.reshape(vol_out, shape, order='F')
-            
-    return retvol, warp_rois_out, log
+    return np.reshape(retvol, shape, order='F'), (ux, vx, wx), log
 
