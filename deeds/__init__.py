@@ -22,10 +22,9 @@ class DeedsRegMethod(RegMethod):
     @classmethod
     def reg_3d(cls, reg_data, reg_grid, ref_data, ref_grid, options, queue):
         # DEEDS is currently ignoring voxel sizes?
-        # FIXME implement apply_transform
         if not np.all(reg_grid == ref_grid):
             raise QpException("DEEDS requires reference data to be in the same space as registration data")
-        return deedsReg(reg_data, ref_data, None, **options)
+        return deedsReg(reg_data, ref_data, **options)
 
     @classmethod
     def apply_transform(cls, reg_data, reg_grid, ref_data, ref_grid, transform, queue):
