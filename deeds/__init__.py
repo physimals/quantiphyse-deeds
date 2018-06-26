@@ -3,7 +3,7 @@ import numpy as np
 from PySide import QtGui
 
 from quantiphyse.gui.widgets import Citation
-from quantiphyse.utils import debug, get_plugins
+from quantiphyse.utils import get_plugins
 from quantiphyse.utils.exceptions import QpException
 
 from .deeds_wrapper import deedsReg, deedsWarp
