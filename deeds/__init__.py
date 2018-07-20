@@ -2,6 +2,7 @@ import numpy as np
 
 from PySide import QtGui
 
+from quantiphyse.data import NumpyData
 from quantiphyse.gui.widgets import Citation
 from quantiphyse.utils import get_plugins
 from quantiphyse.utils.exceptions import QpException
@@ -20,16 +21,20 @@ class DeedsRegMethod(RegMethod):
         self.options_layout = None
 
     @classmethod
-    def reg_3d(cls, reg_data, reg_grid, ref_data, ref_grid, options, queue):
+    def reg_3d(cls, reg_data, ref_data, options, queue):
         # DEEDS is currently ignoring voxel sizes?
-        if not np.all(reg_grid == ref_grid):
+        if not np.all(reg_data.grid.affine == ref_data.grid.affine):
             raise QpException("DEEDS requires reference data to be in the same space as registration data")
-        return deedsReg(reg_data, ref_data, **options)
+        data, trans, log = deedsReg(reg_data.raw(), ref_data.raw(), **options)
+        qpdata = NumpyData(data, grid=reg_data.grid, name=reg_data.name)
+        qptrans = [NumpyData(d, grid=reg_data.grid, name="warp%i" % idx) for idx, d in enumerate(trans)]
+        return qpdata, qptrans, log
 
     @classmethod
-    def apply_transform(cls, reg_data, reg_grid, ref_data, ref_grid, transform, queue):
+    def apply_transform(cls, reg_data, ref_data, transform, queue):
         ux, vx, wx = transform
-        return deedsWarp(reg_data, ux, vx, wx)
+        npdata = deedsWarp(reg_data.raw(), ux, vx, wx)
+        return NumpyData(npdata, grid=reg_data.grid, name=reg_data.name)
 
     def interface(self):
         if self.options_layout is None:
