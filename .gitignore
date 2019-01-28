@@ -7,7 +7,7 @@ packaging/deb
 packaging/msi
 packaging/build
 packaging/licence.rtf
-deeds/*.cpp
+quantiphyse_deeds/*.cpp
 .DS_Store
 _version.py
 *.so

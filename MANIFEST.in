@@ -1,0 +1,2 @@
+include requirements.txt
+recursive-include quantiphyse_deeds *.pyx *.cpp *.c *.h
