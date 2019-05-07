@@ -97,7 +97,8 @@ def get_extensions(rootdir):
         compile_args.append('/EHsc')
         extra_inc = "%s/src/compat" % MODULE
     elif sys.platform.startswith('darwin'):
-        link_args.append("-stdlib=libc++")
+        compile_args += ["-mmacosx-version-min=10.9"]
+        link_args += ["-stdlib=libc++", "-mmacosx-version-min=10.9"]
 
     extensions.append(Extension("%s.deeds_wrapper" % MODULE,
                                 sources=['%s/deeds_wrapper.pyx' % MODULE,
