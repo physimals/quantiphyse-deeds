@@ -15,9 +15,10 @@ from quantiphyse.utils.exceptions import QpException
 
 from .deeds_wrapper import deedsReg, deedsWarp
 
-CITE_TITLE = "MIND: Modality Independent Neighbourhood Descriptor for Multi-modal Deformable Registration"
-CITE_AUTHOR = "MP Heinrich, M Jenkinson, M Bhushan, T Matin, F Gleeson, M Brady, JA Schnabel"
-CITE_JOURNAL = "Medical Image Analysis. vol. 16(7) 2012, pp. 1423-1435"
+CITE_TITLE = "MRF-Based Deformable Registration and Ventilation Estimation of Lung CT"
+CITE_AUTHOR = "Mattias P. Heinrich, M. Jenkinson, M. Brady and J.A. Schnabel"
+CITE_JOURNAL = "IEEE Transactions on Medical Imaging 2013, Volume 32, Issue 7, July 2013, Pages 1239-1248"
+CITE_LINK = "http://dx.doi.org/10.1109/TMI.2013.2246577"
 
 RegMethod = get_plugins("base-classes", class_name="RegMethod")[0]
 
