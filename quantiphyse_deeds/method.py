@@ -59,7 +59,7 @@ class DeedsRegMethod(RegMethod):
 
         qptrans = NumpyData(trans_data, grid=reg_data.grid, name="deeds_warp")
         qptrans.metadata["QpReg"] = "deeds"
-        return qpdata, qptrans, log
+        return qpdata, qptrans, log.decode("UTF-8")
 
     @classmethod
     def apply_transform(cls, reg_data, transform, options, queue):
@@ -83,7 +83,7 @@ class DeedsRegMethod(RegMethod):
 
         ux, vx, wx = transform.volume(0), transform.volume(1), transform.volume(2)
         npdata, log = deedsWarp(reg_data.raw(), ux, vx, wx)
-        return NumpyData(npdata, grid=reg_data.grid, name=reg_data.name), log
+        return NumpyData(npdata, grid=reg_data.grid, name=reg_data.name), log.decode("UTF-8")
 
     def interface(self, generic_options=None):
         """
