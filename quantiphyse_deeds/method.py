@@ -5,10 +5,7 @@ Copyright (c) 2013-2018 University of Oxford
 """
 import numpy as np
 
-try:
-    from PySide import QtGui, QtCore, QtGui as QtWidgets
-except ImportError:
-    from PySide2 import QtGui, QtCore, QtWidgets
+from PySide2 import QtGui, QtCore, QtWidgets
 
 from quantiphyse.data import QpData, NumpyData
 from quantiphyse.gui.widgets import Citation
@@ -90,11 +87,11 @@ class DeedsRegMethod(RegMethod):
 
     def interface(self, generic_options=None):
         """
-        :return: QtGui.QWidget containing DEEDS options
+        :return: QtWidgets.QWidget containing DEEDS options
         """
         if self.options_widget is None:
-            self.options_widget = QtGui.QWidget()  
-            vbox = QtGui.QVBoxLayout()
+            self.options_widget = QtWidgets.QWidget()  
+            vbox = QtWidgets.QVBoxLayout()
             self.options_widget.setLayout(vbox)
 
             cite = Citation(CITE_TITLE, CITE_AUTHOR, CITE_JOURNAL)
@@ -105,17 +102,17 @@ class DeedsRegMethod(RegMethod):
             self.optbox.add("Num random samples per node", NumericOption(intonly=True, minval=1, maxval=100, default=50), key="randsamp")
             self.optbox.add("Number of levels", NumericOption(intonly=True, minval=1, maxval=10, default=5), key="levels")
 
-            #grid.addWidget(QtGui.QLabel("Grid spacing for each level"), 3, 0)
-            #self.spacing = QtGui.QLineEdit()
+            #grid.addWidget(QtWidgets.QLabel("Grid spacing for each level"), 3, 0)
+            #self.spacing = QtWidgets.QLineEdit()
 
-            #grid.addWidget(QtGui.QLabel("Search radius for each level"),4, 0)
-            #self.radius = QtGui.QLineEdit()
+            #grid.addWidget(QtWidgets.QLabel("Search radius for each level"),4, 0)
+            #self.radius = QtWidgets.QLineEdit()
 
-            #grid.addWidget(QtGui.QLabel("Quantisation of search step size for each level"),5, 0)
-            #self.radius = QtGui.QLineEdit()
+            #grid.addWidget(QtWidgets.QLabel("Quantisation of search step size for each level"),5, 0)
+            #self.radius = QtWidgets.QLineEdit()
 
-            #grid.addWidget(QtGui.QLabel("Use symmetric approach"),6, 0)
-            #self.symm = QtGui.QCheckBox()
+            #grid.addWidget(QtWidgets.QLabel("Use symmetric approach"),6, 0)
+            #self.symm = QtWidgets.QCheckBox()
             #self.symm.setChecked(True)
 
             vbox.addWidget(self.optbox)
